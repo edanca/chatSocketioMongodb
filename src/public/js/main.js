@@ -44,7 +44,9 @@ $(function () {
         // console.log($mesageBox.val())
 
         // nombre del envento sera "send message"
-        socket.emit('send message', $mesageBox.val())
+        socket.emit('send message', $mesageBox.val(), (data) => {
+            $chat.append(`<p class="error">${data}</p>`)
+        })
 
         // Limpiamos el campo de mensaje
         $mesageBox.val('')
@@ -65,5 +67,9 @@ $(function () {
         $users.html(html)
     })
 
+
+    socket.on('whisper', (data) => {
+        $chat.append(`<p class="whisper"><b>${data.nick}:</b> ${data.msg}</p>`)
+    })
 
 })
